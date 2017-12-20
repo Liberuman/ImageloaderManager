@@ -18,5 +18,5 @@
         <attr name="borderColor" format="color"/>
         <attr name="isBlur" format="boolean"/>
         <attr name="blurRadius" format="integer"/>
-    </declare-styleable>
+</declare-styleable>
 </resources>
