@@ -48,7 +48,7 @@ public class ImageLoaderActivity extends AppCompatActivity {
 		}
 
 		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", image);
-		ImageLoaderManager.getInstance().displayImage("http://dwz.cn/77b1Xa", blurImage);
+		ImageLoaderManager.getInstance().displayImage("http://img.tuku.cn/file_thumb/201602/m2016021513470744.jpg", blurImage);
 		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", rectangleImage);
 		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKJvS", circleImage);
 
@@ -56,7 +56,7 @@ public class ImageLoaderActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				ImageLoaderManager.getInstance().downloadImage(ImageLoaderActivity.this,
-						"http://c.hiphotos.baidu.com/image/pic/item/2fdda3cc7cd98d10dbceaca82a3fb80e7bec9015.jpg",
+						"http://pic27.nipic.com/20130220/11588199_085535217129_2.jpg",
 						new ImageLoaderListener() {
 							@Override
 							public void onStart() {

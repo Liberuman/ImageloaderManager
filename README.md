@@ -1,18 +1,16 @@
 ### 背景
 
-在APP开发过程，图片加载是一个不可或缺的模块，一般我们都会使用比较成熟的开源库，如Fresco, ImageLoader, Glide等。 这些开源库也都提供了简洁的使用方式，使我们可以快速完成图片的加载过程。但是如果我们需要更换图片加载库，就会发现项目中到处都引用了，这无疑是一个庞大的工作量。
+在APP开发过程，图片加载是一个不可或缺的模块，一般我们都会使用比较成熟的开源库，如Fresco, ImageLoader, Glide等。 这些开源库也都提供了简洁的使用方式，使我们可以快速完成图片的加载过程。但是当我们更换图片加载库时，，会发现项目中到处都引用了，这无疑是一个庞大的工作量。
 
-为了降低图片加载图在项目中的耦合度，特意对图片加载库进行了二次封装。通过这种方式，我们可快速完成图片加载库的更换工作。
+为了降低图片加载库在项目中的耦合度，特意对图片加载库进行了二次封装。通过这种方式，我们可快速完成图片加载库的更换工作。
 
-#### 本次封装仅包含图片加载库的基本功能：
-
-- 初始化图片加载库
-- 显示图片(圆角，圆形等样式)
-- 下载图片
+#### 基本结构
 
 ![image](http://od186sz8s.bkt.clouddn.com/ImageLoaderManager.png)
 
 从结构图中我们可以看出，更换图片加载库只需要设置相应的mLoaderInstance即可。
+
+### 配置
 
 ### 使用
 
@@ -37,7 +35,24 @@
 > 
 > 高斯模糊效果是一个很耗性能的一个操作，很容易引起OOM，所以在使用时应将Bitmap尽可能的缩小，同时选择一个稳定的实现方式。
 
+### Licence
 
-### 总结
-
-此项目旨在介绍这种封装的思想，至于细节方面就交给各位小伙伴了，毕竟很少有APP会同时使用多个图片加载库。看完了不star一下么？
+> Copyright (c) 2018 Freeman
+>
+> Permission is hereby granted, free of charge, to any person obtaining a copy
+> of this software and associated documentation files (the "Software"), to deal
+> in the Software without restriction, including without limitation the rights
+> to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the Software is
+> furnished to do so, subject to the following conditions:
+> 
+> The above copyright notice and this permission notice shall be included in all
+> copies or substantial portions of the Software.
+> 
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+> IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+> FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+> AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+> LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+> OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+> SOFTWARE.
