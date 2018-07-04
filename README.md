@@ -4,18 +4,33 @@
 
 为了降低图片加载库在项目中的耦合度，特意对图片加载库进行了二次封装。通过这种方式，我们可快速完成图片加载库的更换工作。
 
-#### 基本结构
+### 基本结构
 
 ![image](http://od186sz8s.bkt.clouddn.com/ImageLoaderManager.png)
 
 从结构图中我们可以看出，更换图片加载库只需要设置相应的mLoaderInstance即可。
 
-### 配置
+### 添加依赖
+
+在项目的build.gradle中添加：
+
+    allprojects {
+      repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+      }
+    }
+
+在APP模块下的build.gradle中添加依赖：
+
+    dependencies {
+            implementation 'com.github.JuHonggang:ImageloaderManager:v0.1'
+    }
 
 ### 使用
 
     ImageLoaderManager.getInstance().init(getApplicationContext(), new FrescoInstance());
-    ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", image);
+    ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", imageView);
 
 ### 说明
 
