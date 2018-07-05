@@ -24,7 +24,7 @@
 在APP模块下的build.gradle中添加依赖：
 
     dependencies {
-            implementation 'com.github.JuHonggang:ImageloaderManager:v0.1'
+            implementation 'com.github.JuHonggang:ImageloaderManager:v0.14'
     }
 
 ### 使用
