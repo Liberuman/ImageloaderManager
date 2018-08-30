@@ -1,4 +1,4 @@
-package com.sxu.imageloader;
+package com.sxu.imageloader.instance;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -16,6 +16,8 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.process.BitmapProcessor;
+import com.sxu.imageloader.listener.ImageLoaderListener;
+import com.sxu.imageloader.WrapImageView;
 import com.sxu.utils.FastBlurUtil;
 
 /**

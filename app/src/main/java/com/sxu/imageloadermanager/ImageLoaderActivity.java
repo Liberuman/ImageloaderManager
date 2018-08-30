@@ -6,12 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
-import com.sxu.imageloader.FrescoInstance;
-import com.sxu.imageloader.GlideInstance;
-import com.sxu.imageloader.ImageLoaderListener;
+import com.sxu.imageloader.instance.FrescoInstance;
+import com.sxu.imageloader.instance.GlideInstance;
 import com.sxu.imageloader.ImageLoaderManager;
-import com.sxu.imageloader.UILInstance;
+import com.sxu.imageloader.instance.UILInstance;
 import com.sxu.imageloader.WrapImageView;
+import com.sxu.imageloader.listener.SimpleImageLoaderListener;
 
 /**
 
@@ -47,27 +47,17 @@ public class ImageLoaderActivity extends AppCompatActivity {
 			 */
 		}
 
-		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", image);
-		ImageLoaderManager.getInstance().displayImage("http://img.tuku.cn/file_thumb/201602/m2016021513470744.jpg", blurImage);
-		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKzUt", rectangleImage);
-		ImageLoaderManager.getInstance().displayImage("http://t.cn/RTRKJvS", circleImage);
+		ImageLoaderManager.getInstance().displayImage("http://img5.imgtn.bdimg.com/it/u=3604858831,3357525860&fm=26&gp=0.jpg", image);
+		ImageLoaderManager.getInstance().displayImage("http://img3.imgtn.bdimg.com/it/u=2942272814,2073526115&fm=26&gp=0.jpg", blurImage);
+		ImageLoaderManager.getInstance().displayImage("http://img0.imgtn.bdimg.com/it/u=3290825633,1704161465&fm=26&gp=0.jpg", rectangleImage);
+		ImageLoaderManager.getInstance().displayImage("http://img4.imgtn.bdimg.com/it/u=2408754315,4176997451&fm=26&gp=0.jpg", circleImage);
 
 		findViewById(R.id.download_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				ImageLoaderManager.getInstance().downloadImage(ImageLoaderActivity.this,
-						"http://pic27.nipic.com/20130220/11588199_085535217129_2.jpg",
-						new ImageLoaderListener() {
-							@Override
-							public void onStart() {
-
-							}
-
-							@Override
-							public void onProcess(int completedSize, int totalSize) {
-
-							}
-
+						"http://img5.imgtn.bdimg.com/it/u=640974225,3115876790&fm=26&gp=0.jpg",
+						new SimpleImageLoaderListener() {
 							@Override
 							public void onCompleted(Bitmap bitmap) {
 								Toast.makeText(getBaseContext(), "下载成功", Toast.LENGTH_SHORT).show();
@@ -81,12 +71,5 @@ public class ImageLoaderActivity extends AppCompatActivity {
 						});
 			}
 		});
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		// 这里只是为了测试需要，使用时不需要调用
-		ImageLoaderManager.getInstance().onDestroy();
 	}
 }

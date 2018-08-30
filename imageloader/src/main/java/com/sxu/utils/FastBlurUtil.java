@@ -1,11 +1,6 @@
 package com.sxu.utils;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.support.v8.renderscript.Allocation;
-import android.support.v8.renderscript.Element;
-import android.support.v8.renderscript.RenderScript;
-import android.support.v8.renderscript.ScriptIntrinsicBlur;
 
 /**
  * Created by jay on 11/7/15.
@@ -242,35 +237,5 @@ public class FastBlurUtil {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
 
         return (bitmap);
-    }
-
-    /**
-     * RenderScript的使用限制：
-     * 1. 使用UIL图片加载库时显示效果异常；
-     * 1. 使用Glide加载圆角或圆形图片是bitmap不可修改(即scale不能大于0)，否则显示效果异常
-     * @param context
-     * @param bitmap
-     * @param scale     图片的缩放比例
-     * @param blurRadius blurRadius > 0 && blurRadius <= 25
-     * @return
-     */
-    public static Bitmap setBlur(Context context, Bitmap bitmap, int scale, int blurRadius) {
-        if (scale > 0) {
-            bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / scale,
-                    bitmap.getHeight() /scale, false);
-        }
-        Bitmap result = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-
-        RenderScript renderScript = RenderScript.create(context);
-        Allocation allIn = Allocation.createFromBitmap(renderScript, bitmap);
-        Allocation allOut = Allocation.createFromBitmap(renderScript, result);
-        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(renderScript, Element.U8_4(renderScript));
-        blurScript.setRadius(blurRadius);
-        blurScript.setInput(allIn);
-        blurScript.forEach(allOut);
-        allOut.copyTo(result);
-        renderScript.destroy();
-
-        return result;
     }
 }

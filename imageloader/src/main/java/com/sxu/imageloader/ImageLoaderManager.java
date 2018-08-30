@@ -1,6 +1,10 @@
 package com.sxu.imageloader;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.sxu.imageloader.instance.ImageLoaderInstance;
+import com.sxu.imageloader.listener.ImageLoaderListener;
 
 /**
 
@@ -13,26 +17,31 @@ import android.content.Context;
 
 public class ImageLoaderManager {
 
-	private final static ImageLoaderManager instance = new ImageLoaderManager();
 	private ImageLoaderInstance mLoaderInstance;
 
-	private ImageLoaderManager() {
+	protected ImageLoaderManager() {
 
 	}
 
 	public static ImageLoaderManager getInstance() {
-		return instance;
+		return Singleton.instance;
 	}
 
 	public void init(Context context, ImageLoaderInstance loaderInstance) {
-		if (loaderInstance != null) {
-			if (mLoaderInstance == null) {
+		if (loaderInstance == null) {
+			throw new IllegalArgumentException("loaderInstance can't be null");
+		} else if (mLoaderInstance != null) {
+			Log.w("out", "ImageLoaderManager has initialized!!!");
+		} else {
+			synchronized (this) {
 				mLoaderInstance = loaderInstance;
 				mLoaderInstance.init(context);
 			}
-		} else {
-			throw new IllegalArgumentException("loaderInstance can't be null");
 		}
+	}
+
+	public boolean isInited() {
+		return mLoaderInstance != null;
 	}
 
 	public void displayImage(String url, WrapImageView imageView) {
@@ -50,5 +59,9 @@ public class ImageLoaderManager {
 	public void onDestroy() {
 		mLoaderInstance.destroy();
 		mLoaderInstance = null;
+	}
+
+	public static class Singleton {
+		final static ImageLoaderManager instance = new ImageLoaderManager();
 	}
 }

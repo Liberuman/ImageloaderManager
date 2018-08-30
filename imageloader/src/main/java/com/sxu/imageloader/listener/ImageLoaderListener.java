@@ -1,4 +1,4 @@
-package com.sxu.imageloader;
+package com.sxu.imageloader.listener;
 
 import android.graphics.Bitmap;
 

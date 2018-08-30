@@ -1,6 +1,9 @@
-package com.sxu.imageloader;
+package com.sxu.imageloader.instance;
 
 import android.content.Context;
+
+import com.sxu.imageloader.listener.ImageLoaderListener;
+import com.sxu.imageloader.WrapImageView;
 
 /**
 

@@ -1,4 +1,4 @@
-package com.sxu.imageloader;
+package com.sxu.imageloader.instance;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +12,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.sxu.imageloader.listener.ImageLoaderListener;
+import com.sxu.imageloader.WrapImageView;
 import com.sxu.transform.GlideBlurTransform;
 import com.sxu.transform.GlideCircleBitmapTransform;
 import com.sxu.transform.GlideRoundBitmapTransform;

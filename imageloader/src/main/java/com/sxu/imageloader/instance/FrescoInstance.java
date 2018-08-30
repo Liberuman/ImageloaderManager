@@ -1,4 +1,4 @@
-package com.sxu.imageloader;
+package com.sxu.imageloader.instance;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,6 +26,8 @@ import com.facebook.imagepipeline.image.ImageInfo;
 import com.facebook.imagepipeline.postprocessors.IterativeBoxBlurPostProcessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.sxu.imageloader.listener.ImageLoaderListener;
+import com.sxu.imageloader.WrapImageView;
 
 /**
 

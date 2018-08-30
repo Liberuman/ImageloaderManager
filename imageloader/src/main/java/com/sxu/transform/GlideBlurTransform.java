@@ -31,7 +31,7 @@ public class GlideBlurTransform extends BitmapTransformation {
 
 	@Override
 	protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-		return FastBlurUtil.setBlur(mContext, toTransform, 8, mBlurRadius);
+		return FastBlurUtil.doBlur(toTransform, 8, mBlurRadius);
 	}
 
 	@Override
