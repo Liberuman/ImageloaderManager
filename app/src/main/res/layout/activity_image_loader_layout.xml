@@ -7,11 +7,11 @@
     <com.sxu.imageloader.WrapImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:placeHolder="@drawable/default_placeholder_image"
         app:failureHolder="@drawable/default_placeholder_image"/>
     <com.sxu.imageloader.WrapImageView

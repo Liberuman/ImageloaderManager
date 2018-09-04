@@ -42,12 +42,14 @@ public class GlideInstance implements ImageLoaderInstance {
 	@Override
 	public void displayImage(String url, WrapImageView imageView, final ImageLoaderListener listener) {
 		RequestOptions options = new RequestOptions()
+				.centerInside()
 				.placeholder(imageView.getPlaceHolder())
-				.error(imageView.getFailureHolder());
+				.error(imageView.getFailureHolder())
+				.dontAnimate();
 		// 根据imageView的形状，设置相应的transform
 		if (imageView.getShape() == WrapImageView.SHAPE_CIRCLE) {
 			if (imageView.isBlur()) {
-				options.transforms(new GlideBlurTransform(imageView.getContext(), imageView.getBlurRadius()),
+				options.transforms(new GlideBlurTransform(imageView.getContext(), url, imageView.getBlurRadius()),
 						new GlideCircleBitmapTransform(imageView.getBorderWidth(),
 								imageView.getBorderColor()));
 			} else {
@@ -55,7 +57,7 @@ public class GlideInstance implements ImageLoaderInstance {
 			}
 		} else {
 			if (imageView.isBlur()) {
-				options.transforms(new GlideBlurTransform(imageView.getContext(), imageView.getBlurRadius()),
+				options.transforms(new GlideBlurTransform(imageView.getContext(), url, imageView.getBlurRadius()),
 						new GlideRoundBitmapTransform(imageView.getRadius(), imageView.getBorderWidth(),
 								imageView.getBorderColor()));
 			} else {

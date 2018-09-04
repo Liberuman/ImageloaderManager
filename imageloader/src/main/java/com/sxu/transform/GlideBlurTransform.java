@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 
+import com.bumptech.glide.disklrucache.DiskLruCache;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.sxu.utils.DiskLruCacheManager;
 import com.sxu.utils.FastBlurUtil;
 
 import java.security.MessageDigest;
@@ -21,17 +23,24 @@ import java.security.MessageDigest;
 
 public class GlideBlurTransform extends BitmapTransformation {
 
-	private Context mContext;
-	private int mBlurRadius;
+	private String url;
+	private Context context;
+	private int blurRadius;
 
-	public GlideBlurTransform(Context context, int blurRadius) {
-		this.mContext = context;
-		this.mBlurRadius = blurRadius;
+	private final int MAX_CACHE_SIZE = 16 * 1024 * 1024;
+
+	public GlideBlurTransform(Context context, String url, int blurRadius) {
+		this.context = context;
+		this.url = url;
+		this.blurRadius = blurRadius;
 	}
 
 	@Override
 	protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-		return FastBlurUtil.doBlur(toTransform, 8, mBlurRadius);
+		Bitmap bitmap =  FastBlurUtil.doBlur(toTransform, 8, blurRadius);
+		// 缓存高斯模糊图片
+		// DiskLruCacheManager.getInstance(context).put(url, bitmap);
+		return bitmap;
 	}
 
 	@Override

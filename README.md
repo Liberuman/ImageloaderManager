@@ -1,3 +1,6 @@
+[![](https://jitpack.io/v/JuHonggang/ImageloaderManager.svg)](https://jitpack.io/#JuHonggang/ImageloaderManager)
+
+
 ### 背景
 
 在APP开发过程，图片加载是一个不可或缺的模块，一般我们都会使用比较成熟的开源库，如Fresco, ImageLoader, Glide等。 这些开源库也都提供了简洁的使用方式，使我们可以快速完成图片的加载过程。但是当我们更换图片加载库时，，会发现项目中到处都引用了，这无疑是一个庞大的工作量。

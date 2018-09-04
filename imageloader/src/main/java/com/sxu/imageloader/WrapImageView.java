@@ -3,6 +3,7 @@ package com.sxu.imageloader;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 
@@ -153,5 +154,13 @@ public class WrapImageView extends GenericDraweeView {
 
 	public int getBlurRadius() {
 		return mBlurRadius;
+	}
+
+	/**
+	 * 解决共享动画无效的问题
+	 * @param matrix
+	 */
+	public void animateTransform(Matrix matrix) {
+		invalidate();
 	}
 }
