@@ -1,5 +1,6 @@
 package com.sxu.transform;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -8,6 +9,7 @@ import android.support.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
+import com.sxu.utils.DiskLruCacheManager;
 
 import java.security.MessageDigest;
 
@@ -24,12 +26,12 @@ public class GlideCircleBitmapTransform extends BitmapTransformation {
 
 	private int mBorderWidth;
 	private int mBorderColor;
+	private String mKey;
+	private Context mContext;
 
-	public GlideCircleBitmapTransform() {
-
-	}
-
-	public GlideCircleBitmapTransform(int borderWidth, int borderColor) {
+	public GlideCircleBitmapTransform(Context context, String key, int borderWidth, int borderColor) {
+		this.mContext = context;
+		this.mKey = key;
 		this.mBorderWidth = borderWidth;
 		this.mBorderColor = borderColor;
 	}
@@ -42,9 +44,9 @@ public class GlideCircleBitmapTransform extends BitmapTransformation {
 		int newSize = size - mBorderWidth * 2;
 		int radius = newSize / 2;
 		Bitmap bitmap = Bitmap.createBitmap(toTransform, x, y, newSize, newSize);
-		Bitmap result = pool.get(newSize, newSize, Bitmap.Config.ARGB_8888);
+		Bitmap result = pool.get(newSize, newSize, toTransform.getConfig());
 		if (result == null) {
-			result = Bitmap.createBitmap(newSize, newSize, Bitmap.Config.ARGB_8888);
+			result = Bitmap.createBitmap(newSize, newSize, toTransform.getConfig());
 		}
 
 		Canvas canvas = new Canvas(result);
@@ -57,9 +59,11 @@ public class GlideCircleBitmapTransform extends BitmapTransformation {
 			canvas.drawCircle(radius, radius, radius - mBorderWidth/2, borderPaint);
 		}
 		Paint paint = new Paint();
-		paint.setShader(new BitmapShader(bitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP ));
+		paint.setShader(new BitmapShader(bitmap, BitmapShader.TileMode.CLAMP, BitmapShader.TileMode.CLAMP));
 		paint.setAntiAlias(true);
 		canvas.drawCircle(radius, radius, radius - mBorderWidth, paint);
+
+		DiskLruCacheManager.getInstance(mContext).put(mKey, result);
 
 		return result;
 	}

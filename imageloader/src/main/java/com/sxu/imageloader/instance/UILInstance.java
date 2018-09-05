@@ -32,66 +32,36 @@ import com.sxu.utils.FastBlurUtil;
 public class UILInstance implements ImageLoaderInstance {
 
 	private DisplayImageOptions options;
-	private WrapImageView mImageView;
 
 	private void initOptions(final WrapImageView imageView) {
-		if (options == null) {
-			options = new DisplayImageOptions.Builder()
-					.showImageOnLoading(imageView.getPlaceHolder())
-					.showImageForEmptyUri(imageView.getPlaceHolder())
-					.showImageOnFail(imageView.getFailureHolder())
-					.cacheInMemory(true)
-					.cacheOnDisk(true)
-					.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-					.bitmapConfig(Bitmap.Config.RGB_565)
-					.considerExifParams(true)
-					.preProcessor(null)
-					.preProcessor(!imageView.isBlur() ? null : new BitmapProcessor() {
-						@Override
-						public Bitmap process(Bitmap bitmap) {
-							return FastBlurUtil.doBlur(bitmap, 2, imageView.getBlurRadius() * 4);
-							//return FastBlurUtil.setBlur(imageView.getContext(), bitmap, 25);
-						}
-					})
-					.displayer(imageView.getShape() == WrapImageView.SHAPE_CIRCLE
-							? new CircleBitmapDisplayer(imageView.getBorderColor(), imageView.getBorderWidth())
-							: new RoundedBitmapDisplayer(imageView.getRadius())
-					)
-					.build();
-		} else {
-			if (!mImageView.equals(imageView)) {
-				options = new DisplayImageOptions.Builder()
-						.showImageOnLoading(imageView.getPlaceHolder())
-						.showImageForEmptyUri(imageView.getPlaceHolder())
-						.showImageOnFail(imageView.getFailureHolder())
-						.cacheInMemory(true)
-						.cacheOnDisk(true)
-						.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-						.bitmapConfig(Bitmap.Config.RGB_565)
-						.considerExifParams(true)
-						.preProcessor(!imageView.isBlur() ? null : new BitmapProcessor() {
-							@Override
-							public Bitmap process(Bitmap bitmap) {
-								return FastBlurUtil.doBlur(bitmap, 2, imageView.getBlurRadius() * 4);
-								//return FastBlurUtil.setBlur(imageView.getContext(), bitmap, 25);
-							}
-						})
-						.displayer(imageView.getShape() == WrapImageView.SHAPE_CIRCLE
-								? new CircleBitmapDisplayer(imageView.getBorderColor(), imageView.getBorderWidth())
-								: new RoundedBitmapDisplayer(imageView.getRadius())
-						)
-						.build();
-			}
+		DisplayImageOptions.Builder builder = new DisplayImageOptions.Builder()
+				.showImageOnLoading(imageView.getPlaceHolder())
+				.showImageForEmptyUri(imageView.getPlaceHolder())
+				.showImageOnFail(imageView.getFailureHolder())
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+				.imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+				.bitmapConfig(Bitmap.Config.RGB_565)
+				.considerExifParams(true)
+				.preProcessor(!imageView.isBlur() ? null : new BitmapProcessor() {
+					@Override
+					public Bitmap process(Bitmap bitmap) {
+						return FastBlurUtil.doBlur(bitmap, 2, imageView.getBlurRadius() * 4);
+					}
+				});
+		int shape = imageView.getShape();
+		if (shape == WrapImageView.SHAPE_CIRCLE) {
+			builder.displayer(new CircleBitmapDisplayer(imageView.getBorderColor(), imageView.getBorderWidth()));
+		} else if (shape == WrapImageView.SHAPE_ROUND) {
+			builder.displayer(new RoundedBitmapDisplayer(imageView.getRadius()));
 		}
-		mImageView = imageView;
+		options = builder.build();
 	}
 
-	Context context;
 	@Override
 	public void init(Context context) {
-		this.context = context;
 		int memCacheSize = (int) Math.min(Runtime.getRuntime().maxMemory() / 8, 64 * 1024 * 1024);
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context.getApplicationContext())
 				.denyCacheImageMultipleSizesInMemory()
 				.memoryCacheSize(memCacheSize)
 				.diskCacheFileNameGenerator(new Md5FileNameGenerator())

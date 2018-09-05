@@ -21,6 +21,8 @@ import com.facebook.drawee.drawable.ScalingUtils;
 import com.facebook.drawee.generic.GenericDraweeHierarchy;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.generic.RoundingParams;
+import com.facebook.imagepipeline.common.ImageDecodeOptions;
+import com.facebook.imagepipeline.common.ImageDecodeOptionsBuilder;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.image.CloseableBitmap;
 import com.facebook.imagepipeline.image.CloseableImage;
@@ -42,7 +44,6 @@ import com.sxu.imageloader.WrapImageView;
 
 public class FrescoInstance implements ImageLoaderInstance {
 
-	@Override
 	public void init(Context context) {
 		Fresco.initialize(context);
 	}
@@ -57,7 +58,9 @@ public class FrescoInstance implements ImageLoaderInstance {
 		if (url == null) {
 			url = "";
 		}
-		RoundingParams params = null;
+
+		// 设置图片形状
+		RoundingParams params;
 		if (imageView.getShape() == WrapImageView.SHAPE_CIRCLE) {
 			params = RoundingParams.asCircle();
 		} else if (imageView.getShape() == WrapImageView.SHAPE_ROUND) {
@@ -69,7 +72,6 @@ public class FrescoInstance implements ImageLoaderInstance {
 		} else {
 			params = RoundingParams.fromCornersRadius(0);
 		}
-
 		if (imageView.getBorderColor() != 0 && imageView.getBorderWidth() != 0) {
 			params.setBorder(imageView.getBorderColor(), imageView.getBorderWidth());
 			params.setPadding(imageView.getBorderWidth());
@@ -77,6 +79,7 @@ public class FrescoInstance implements ImageLoaderInstance {
 
 		GenericDraweeHierarchyBuilder builder = new GenericDraweeHierarchyBuilder(imageView.getContext().getResources());
 		builder.setRoundingParams(params);
+		// 设置占位图，失败图，遮罩
 		if (imageView.getPlaceHolder() != 0) {
 			builder.setPlaceholderImage(imageView.getPlaceHolder());
 		}
@@ -93,14 +96,19 @@ public class FrescoInstance implements ImageLoaderInstance {
 				.setActualImageScaleType(scaleType);
 		imageView.setHierarchy(builder.build());
 		PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
+
+		ImageRequestBuilder requestBuilder = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url));
 		if (imageView.isBlur()) {
-			ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
-					.setPostprocessor(new IterativeBoxBlurPostProcessor(imageView.getBlurRadius() * 4))
-					.build();
-			controller.setImageRequest(request);
+			// 高斯模糊效果使用RGB_565时无效
+			requestBuilder.setPostprocessor(new IterativeBoxBlurPostProcessor(imageView.getBlurRadius() * 4));
 		} else {
-			controller.setUri(Uri.parse(url));
+			ImageDecodeOptionsBuilder optionsBuilder = new ImageDecodeOptionsBuilder();
+			optionsBuilder.setBitmapConfig(Bitmap.Config.RGB_565);
+			ImageDecodeOptions options = new ImageDecodeOptions(optionsBuilder);
+			requestBuilder.setImageDecodeOptions(options);
 		}
+		controller.setImageRequest(requestBuilder.build());
+
 		if (listener != null) {
 			controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
 				@Override

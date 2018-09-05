@@ -18,5 +18,6 @@
         <attr name="borderColor" format="color"/>
         <attr name="isBlur" format="boolean"/>
         <attr name="blurRadius" format="integer"/>
+        <attr name="optimizeEnabled" format="boolean"/>
 </declare-styleable>
 </resources>

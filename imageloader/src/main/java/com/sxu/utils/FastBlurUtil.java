@@ -40,7 +40,7 @@ public class FastBlurUtil {
             sentBitmap = Bitmap.createScaledBitmap(sentBitmap, sentBitmap.getWidth() / scaleRadius,
                     sentBitmap.getHeight() / scaleRadius, false);
         }
-        Bitmap bitmap= sentBitmap.copy(sentBitmap.getConfig(), true);
+        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
 
         if (radius < 1) {
             return (null);

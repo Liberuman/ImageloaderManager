@@ -23,15 +23,13 @@ import java.security.MessageDigest;
 
 public class GlideBlurTransform extends BitmapTransformation {
 
-	private String url;
+	private String key;
 	private Context context;
 	private int blurRadius;
 
-	private final int MAX_CACHE_SIZE = 16 * 1024 * 1024;
-
-	public GlideBlurTransform(Context context, String url, int blurRadius) {
+	public GlideBlurTransform(Context context, String key, int blurRadius) {
 		this.context = context;
-		this.url = url;
+		this.key = key;
 		this.blurRadius = blurRadius;
 	}
 
@@ -39,7 +37,7 @@ public class GlideBlurTransform extends BitmapTransformation {
 	protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
 		Bitmap bitmap =  FastBlurUtil.doBlur(toTransform, 8, blurRadius);
 		// 缓存高斯模糊图片
-		// DiskLruCacheManager.getInstance(context).put(url, bitmap);
+		DiskLruCacheManager.getInstance(context).put(key, bitmap);
 		return bitmap;
 	}
 

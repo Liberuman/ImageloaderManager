@@ -31,8 +31,8 @@ public class WrapImageView extends GenericDraweeView {
 	private int mBottomRightRadius;
 	private int mBorderWidth;
 	private int mBorderColor;
-	private boolean mIsBlur;
 	private int mBlurRadius;
+	private boolean mIsBlur;
 
 	public static final int SHAPE_NORMAL = 0;
 	public static final int SHAPE_CIRCLE = 1;
@@ -154,6 +154,14 @@ public class WrapImageView extends GenericDraweeView {
 
 	public int getBlurRadius() {
 		return mBlurRadius;
+	}
+
+	public String getParams() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(mIsBlur).append(mBlurRadius)
+				.append(mShape).append(mRadius)
+				.append(mBorderWidth).append(mBorderColor);
+		return builder.toString();
 	}
 
 	/**
