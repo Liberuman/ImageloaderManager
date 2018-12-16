@@ -1,5 +1,7 @@
-[![](https://jitpack.io/v/JuHonggang/ImageloaderManager.svg)](https://jitpack.io/#JuHonggang/ImageloaderManager)
+### ！！！说明：为了更好地整合图片相关的操作，已将此项目合并到[ImageSet](https://github.com/juhonggang/imageset)，后续不再更新。
 
+
+[![](https://jitpack.io/v/JuHonggang/ImageloaderManager.svg)](https://jitpack.io/#JuHonggang/ImageloaderManager)
 
 ### 背景
 
